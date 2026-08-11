@@ -40,6 +40,10 @@ scamshield-env/
 *.env
 !.env.example
 
+# Kaggle credentials
+.kaggle/
+kaggle.json
+
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 */.ipynb_checkpoints/*
