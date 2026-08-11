@@ -51,6 +51,7 @@ opencv-python-headless==4.9.0.80
 # ── NLP Utilities ────────────────────────────────────────────
 nltk==3.8.1
 langdetect==1.0.9
+deep-translator==1.11.4
 #googletrans==4.0.0rc1
 
 # ── Visualization (for notebooks) ────────────────────────────
