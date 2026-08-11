@@ -1,0 +1,31 @@
+{
+  "weights": {
+    "distilbert": 0.4,
+    "xgboost_text": 0.25,
+    "url_model": 0.25,
+    "lr_text": 0.1
+  },
+  "risk_levels": {
+    "LOW": {
+      "min": 0,
+      "max": 25,
+      "color": "#2ecc71"
+    },
+    "MEDIUM": {
+      "min": 26,
+      "max": 50,
+      "color": "#f39c12"
+    },
+    "HIGH": {
+      "min": 51,
+      "max": 75,
+      "color": "#e67e22"
+    },
+    "CRITICAL": {
+      "min": 76,
+      "max": 100,
+      "color": "#e74c3c"
+    }
+  },
+  "version": "1.0"
+}
