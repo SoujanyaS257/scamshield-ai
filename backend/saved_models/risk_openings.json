@@ -1,0 +1,18 @@
+{
+  "CRITICAL": {
+    "en": "🔴 CRITICAL RISK — This is almost certainly a scam. Do NOT engage.",
+    "hi": "🔴 गंभीर खतरा — यह लगभग निश्चित रूप से एक घोटाला है। कोई कार्रवाई न करें।"
+  },
+  "HIGH": {
+    "en": "🚨 HIGH RISK — This shows strong signs of being a scam. Be very careful.",
+    "hi": "🚨 उच्च जोखिम — इसमें घोटाले के स्पष्ट संकेत हैं। बहुत सावधान रहें।"
+  },
+  "MEDIUM": {
+    "en": "⚠️ MEDIUM RISK — This has some suspicious elements. Verify before acting.",
+    "hi": "⚠️ मध्यम जोखिम — इसमें कुछ संदिग्ध तत्व हैं। कार्रवाई से पहले सत्यापित करें।"
+  },
+  "LOW": {
+    "en": "✅ LOW RISK — This appears to be legitimate. Stay cautious anyway.",
+    "hi": "✅ कम जोखिम — यह वैध प्रतीत होता है। फिर भी सतर्क रहें।"
+  }
+}

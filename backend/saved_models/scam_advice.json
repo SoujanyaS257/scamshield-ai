@@ -1,0 +1,123 @@
+{
+  "OTP/Credential Theft": {
+    "immediate": [
+      "🚫 NEVER share OTP with anyone — not even bank employees",
+      "🚫 Do NOT call back any number mentioned in the message",
+      "🔒 If you already shared OTP: call your bank immediately at their official number",
+      "🔒 Block the sender's number"
+    ],
+    "preventive": [
+      "✅ Enable SMS transaction alerts on your bank account",
+      "✅ Set daily transaction limits on your banking app",
+      "✅ Register on DND (Do Not Disturb) at trai.gov.in"
+    ],
+    "report_to": [
+      "📞 Cybercrime Helpline: 1930",
+      "🌐 Online: https://cybercrime.gov.in",
+      "📱 Forward scam SMS to 7726 (SPAM)"
+    ]
+  },
+  "UPI Payment Fraud": {
+    "immediate": [
+      "🚫 Do NOT scan any QR code sent to you",
+      "🚫 Do NOT click \"Collect Request\" from unknown UPI IDs",
+      "🔒 Remember: Receiving money NEVER requires your UPI PIN",
+      "🔒 If already transacted: Report in your UPI app immediately"
+    ],
+    "preventive": [
+      "✅ Enable UPI transaction notifications",
+      "✅ Set transaction limits in your UPI app",
+      "✅ Block unknown UPI collection requests"
+    ],
+    "report_to": [
+      "📞 Cybercrime: 1930",
+      "🏦 Your bank's fraud helpline (number on bank card)",
+      "🌐 https://cybercrime.gov.in"
+    ]
+  },
+  "Lottery/Prize Scam": {
+    "immediate": [
+      "🚫 Do NOT pay any \"processing fee\" or \"tax\" to claim prize",
+      "🚫 Do NOT share personal documents",
+      "🚫 Do NOT call the number provided",
+      "❌ You CANNOT win a lottery you never entered"
+    ],
+    "preventive": [
+      "✅ Block and report the number",
+      "✅ Warn family members about this scam"
+    ],
+    "report_to": [
+      "📞 Cybercrime: 1930",
+      "🌐 https://cybercrime.gov.in"
+    ]
+  },
+  "Phishing Attack": {
+    "immediate": [
+      "🚫 Do NOT click any links in the message",
+      "🚫 Do NOT enter credentials on any linked website",
+      "🔒 If you clicked and entered details: change passwords immediately",
+      "🔒 Enable 2-factor authentication on all accounts"
+    ],
+    "preventive": [
+      "✅ Always check URL carefully before entering password",
+      "✅ Look for HTTPS and the correct domain name",
+      "✅ Use a password manager to avoid fake site logins",
+      "✅ Install antivirus with web protection"
+    ],
+    "report_to": [
+      "📞 Cybercrime: 1930",
+      "📧 Forward phishing emails to: report@phishing.gov.in",
+      "🌐 PhishTank: phishtank.com/report"
+    ]
+  },
+  "Impersonation Scam": {
+    "immediate": [
+      "🚫 Do NOT trust caller ID or SMS sender name",
+      "🚫 Do NOT share any information over phone/SMS",
+      "📞 Hang up and call the organization directly",
+      "🔍 Verify using official website/app ONLY"
+    ],
+    "preventive": [
+      "✅ Save official helpline numbers of your bank/services",
+      "✅ Banks never ask for PIN/OTP over phone",
+      "✅ Government agencies contact via official letters, not SMS"
+    ],
+    "report_to": [
+      "📞 Cybercrime: 1930",
+      "🏦 Your bank fraud helpline",
+      "🌐 https://cybercrime.gov.in"
+    ]
+  },
+  "Personal Data Theft": {
+    "immediate": [
+      "🚫 Do NOT share Aadhaar, PAN, passport details via SMS/email",
+      "🚫 Do NOT upload documents to links sent in messages",
+      "🔒 If already shared: file a complaint immediately"
+    ],
+    "preventive": [
+      "✅ Lock your Aadhaar biometrics at myaadhaar.uidai.gov.in",
+      "✅ Check Aadhaar authentication history regularly",
+      "✅ Never share documents with unverified parties"
+    ],
+    "report_to": [
+      "📞 UIDAI Helpline: 1947",
+      "📞 Cybercrime: 1930",
+      "🌐 https://cybercrime.gov.in"
+    ]
+  },
+  "Unknown Scam": {
+    "immediate": [
+      "🚫 Do NOT respond to the message",
+      "🚫 Do NOT click any links or call any numbers",
+      "🔒 Block the sender"
+    ],
+    "preventive": [
+      "✅ Be skeptical of unsolicited messages",
+      "✅ Verify independently before taking any action"
+    ],
+    "report_to": [
+      "📞 Cybercrime Helpline: 1930",
+      "🌐 https://cybercrime.gov.in"
+    ]
+  }
+}

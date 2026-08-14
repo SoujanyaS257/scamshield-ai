@@ -1,0 +1,193 @@
+{
+  "categories": {
+    "urgency": {
+      "keywords": [
+        "urgent",
+        "immediately",
+        "now",
+        "asap",
+        "quick",
+        "hurry",
+        "expire",
+        "expir",
+        "last chance",
+        "today",
+        "hour",
+        "24",
+        "48",
+        "limited",
+        "deadline"
+      ],
+      "reason": "Urgency language detected — scammers use time pressure to prevent you from thinking clearly",
+      "severity": "HIGH",
+      "advice": "Take your time. Legitimate organizations never demand immediate action via SMS/email."
+    },
+    "account_threat": {
+      "keywords": [
+        "block",
+        "suspend",
+        "deactivat",
+        "terminat",
+        "clos",
+        "freeze",
+        "restrict",
+        "limit",
+        "disabl",
+        "lock"
+      ],
+      "reason": "Account threat detected — threatening to block/suspend your account to scare you",
+      "severity": "HIGH",
+      "advice": "Call your bank/service directly using the official number on their website."
+    },
+    "verification_request": {
+      "keywords": [
+        "verify",
+        "verif",
+        "confirm",
+        "validat",
+        "authent",
+        "kyc",
+        "update",
+        "complet",
+        "submit"
+      ],
+      "reason": "Verification request detected — asking you to \"verify\" personal information",
+      "severity": "HIGH",
+      "advice": "Never verify personal details through links in SMS/email. Use official apps/websites."
+    },
+    "otp_request": {
+      "keywords": [
+        "otp",
+        "one time",
+        "passcode",
+        "pin",
+        "password",
+        "share otp",
+        "enter otp",
+        "send otp"
+      ],
+      "reason": "OTP/Password request detected — NO legitimate service asks you to share your OTP",
+      "severity": "CRITICAL",
+      "advice": "NEVER share OTP with anyone. Banks/UPI apps will NEVER ask for your OTP."
+    },
+    "prize_lottery": {
+      "keywords": [
+        "won",
+        "winner",
+        "prize",
+        "lottery",
+        "lucky",
+        "reward",
+        "gift",
+        "congratulation",
+        "selected",
+        "chosen",
+        "kbc"
+      ],
+      "reason": "Prize/Lottery scam detected — you cannot win a contest you never entered",
+      "severity": "HIGH",
+      "advice": "Ignore completely. Report to cybercrime.gov.in if you get such messages."
+    },
+    "financial_lure": {
+      "keywords": [
+        "cash",
+        "money",
+        "rupee",
+        "rs",
+        "lakh",
+        "crore",
+        "earn",
+        "income",
+        "profit",
+        "invest",
+        "return",
+        "cashback",
+        "refund",
+        "free"
+      ],
+      "reason": "Financial lure detected — offering money/prizes to lower your guard",
+      "severity": "MEDIUM",
+      "advice": "If it sounds too good to be true, it is. Verify through official channels only."
+    },
+    "suspicious_url": {
+      "keywords": [
+        "url_present",
+        "http",
+        "click",
+        "link",
+        "visit",
+        "website",
+        "portal",
+        "login",
+        "signin"
+      ],
+      "reason": "Suspicious link detected — contains URL that may lead to a fake website",
+      "severity": "HIGH",
+      "advice": "Do NOT click links in SMS/email. Type the official website address manually."
+    },
+    "personal_info_request": {
+      "keywords": [
+        "card",
+        "account",
+        "number",
+        "detail",
+        "information",
+        "pan",
+        "aadhaar",
+        "dob",
+        "birth",
+        "address",
+        "bank",
+        "ifsc",
+        "credit",
+        "debit",
+        "cvv"
+      ],
+      "reason": "Personal information request detected — asking for sensitive data",
+      "severity": "CRITICAL",
+      "advice": "Never share card numbers, CVV, Aadhaar, or PAN through SMS/email/phone."
+    },
+    "upi_fraud": {
+      "keywords": [
+        "upi",
+        "paytm",
+        "phonepe",
+        "gpay",
+        "google pay",
+        "bhim",
+        "neft",
+        "imps",
+        "transfer",
+        "send money"
+      ],
+      "reason": "UPI/Payment fraud pattern detected — targeting digital payment systems",
+      "severity": "CRITICAL",
+      "advice": "Never share UPI PIN. Use only official bank apps. Enable transaction limits."
+    },
+    "impersonation": {
+      "keywords": [
+        "sbi",
+        "hdfc",
+        "icici",
+        "axis",
+        "rbi",
+        "sebi",
+        "amazon",
+        "flipkart",
+        "paytm",
+        "jio",
+        "airtel",
+        "government",
+        "police",
+        "court",
+        "income tax",
+        "irctc",
+        "bsnl",
+        "uidai"
+      ],
+      "reason": "Brand/Authority impersonation detected — pretending to be a trusted organization",
+      "severity": "HIGH",
+      "advice": "Contact the organization directly using their official website/app to verify."
+    }
+  }
+}
