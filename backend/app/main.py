@@ -1,83 +1,162 @@
 """
-ScamShield AI — FastAPI Backend
-================================
-This is the entry point for the ScamShield AI backend.
-All API routes are registered here.
-
-Author: Your Name
-Version: 0.1.0 (Phase 0 - Setup)
+ScamShield AI — FastAPI Application Entry Point
+================================================
+This file:
+1. Creates the FastAPI app
+2. Loads ML models at startup (lifespan)
+3. Registers all API routers
+4. Configures middleware (CORS, rate limiting)
 """
 
-# ── Imports ───────────────────────────────────────────────────────────────────
-# fastapi: The main web framework
-# FastAPI() creates our application instance
-from fastapi import FastAPI
-
-# CORSMiddleware: Allows our React frontend (running on port 3000) to talk
-# to our FastAPI backend (running on port 8000).
-# Without CORS, browsers block cross-origin requests for security reasons.
+import time
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from loguru import logger
 
-# ── App Instance ───────────────────────────────────────────────────────────────
-# This creates the FastAPI application.
-# title, description, version appear in the auto-generated API docs at /docs
+from app.config import settings
+from app.database.connection import create_tables
+
+# ── Rate Limiter ──────────────────────────────────────────────
+limiter = Limiter(key_func=get_remote_address)
+
+
+# ── Lifespan: Startup & Shutdown ──────────────────────────────
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Runs ONCE at startup, ONCE at shutdown.
+    
+    WHY LIFESPAN INSTEAD OF @app.on_event?
+    lifespan is the modern FastAPI approach.
+    Code before 'yield' = startup.
+    Code after 'yield'  = shutdown.
+    """
+    # ── STARTUP ───────────────────────────────────────────
+    logger.info("=" * 50)
+    logger.info("  ScamShield AI — Starting up...")
+    logger.info("=" * 50)
+
+    # Create database tables
+    logger.info("Creating database tables...")
+    create_tables()
+    logger.info("  [OK] Database ready")
+
+    # Load ML models
+    logger.info("Loading ML models...")
+    from app.models.text_classifier import text_classifier
+    from app.models.url_classifier  import url_classifier
+    from app.models.image_analyzer  import image_analyzer
+
+    text_classifier.load()
+    url_classifier.load()
+    image_analyzer.load()
+
+    logger.info("=" * 50)
+    logger.info("  All systems ready!")
+    logger.info(f"  Docs: http://localhost:8000/docs")
+    logger.info("=" * 50)
+
+    yield  # App runs here
+
+    # ── SHUTDOWN ──────────────────────────────────────────
+    logger.info("ScamShield AI shutting down...")
+
+
+# ── Create App ────────────────────────────────────────────────
 app = FastAPI(
     title="ScamShield AI",
-    description="Multimodal Scam and Phishing Detection Assistant",
-    version="0.1.0",
-    docs_url="/docs",        # Swagger UI at http://localhost:8000/docs
-    redoc_url="/redoc"       # ReDoc UI at http://localhost:8000/redoc
+    description="""
+## 🛡️ ScamShield AI — Multimodal Scam Detection API
+
+Detect scams in:
+- **SMS/Email text** → `/analyze/text`
+- **URLs** → `/analyze/url`
+- **Screenshots** → `/analyze/image`
+- **Voice** → `/analyze/voice`
+
+Returns risk score (0-100), explanation, and actionable advice.
+    """,
+    version=settings.app_version,
+    lifespan=lifespan,
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
-# ── CORS Configuration ─────────────────────────────────────────────────────────
-# CORS = Cross-Origin Resource Sharing
-# Our frontend will run at http://localhost:3000
-# Our backend will run at http://localhost:8000
-# Without this, the browser refuses to let the frontend talk to the backend
+# ── Rate Limiting ─────────────────────────────────────────────
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# ── CORS ──────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",    # React dev server
-        "http://localhost:5173",    # Vite dev server (alternative)
-        "https://scamshield.vercel.app",  # Production frontend (later)
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "https://scamshield.vercel.app",
     ],
     allow_credentials=True,
-    allow_methods=["*"],    # Allow GET, POST, PUT, DELETE, etc.
-    allow_headers=["*"],    # Allow any headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# ── Health Check Endpoint ──────────────────────────────────────────────────────
-# This is a standard practice — a simple endpoint to verify the server is running
-# Monitoring tools, Docker health checks, and deployment platforms use this
+
+# ── Request Timing Middleware ─────────────────────────────────
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    """Add X-Process-Time header to every response."""
+    start = time.time()
+    response = await call_next(request)
+    response.headers["X-Process-Time"] = str(
+        round((time.time() - start) * 1000, 2)
+    )
+    return response
+
+
+# ── Register Routers ──────────────────────────────────────────
+from app.api import analyze, dashboard, feedback
+
+app.include_router(
+    analyze.router,
+    prefix="/analyze",
+    tags=["Analysis"]
+)
+app.include_router(
+    dashboard.router,
+    prefix="/dashboard",
+    tags=["Dashboard"]
+)
+app.include_router(
+    feedback.router,
+    prefix="/feedback",
+    tags=["Feedback"]
+)
+
+
+# ── Health Endpoints ──────────────────────────────────────────
+_start_time = time.time()
+
 @app.get("/", tags=["Health"])
 async def root():
-    """
-    Root endpoint — confirms the API is running.
-    Used for health checks by deployment platforms.
-    """
     return {
-        "status": "running",
-        "message": "🛡️ ScamShield AI Backend is live!",
-        "version": "0.1.0",
-        "docs": "/docs"
+        "status":  "running",
+        "message": "🛡️ ScamShield AI is live!",
+        "version": settings.app_version,
+        "docs":    "/docs"
     }
-
 
 @app.get("/health", tags=["Health"])
-async def health_check():
-    """
-    Health check endpoint.
-    Returns 200 OK when the service is healthy.
-    """
+async def health():
+    from app.models.text_classifier import text_classifier
+    from app.models.url_classifier  import url_classifier
     return {
-        "status": "healthy",
-        "service": "ScamShield AI",
-        "version": "0.1.0"
+        "status":             "healthy",
+        "version":            settings.app_version,
+        "models_loaded":      text_classifier.is_loaded,
+        "url_model_loaded":   url_classifier.is_loaded,
+        "uptime_seconds":     round(time.time() - _start_time, 1)
     }
-
-
-# ── Future Routers (we will add these in later phases) ────────────────────────
-# from app.api import analyze, dashboard, feedback
-# app.include_router(analyze.router, prefix="/analyze", tags=["Analysis"])
-# app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
-# app.include_router(feedback.router, prefix="/feedback", tags=["Feedback"])
