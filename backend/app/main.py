@@ -51,10 +51,12 @@ async def lifespan(app: FastAPI):
     from app.models.text_classifier import text_classifier
     from app.models.url_classifier  import url_classifier
     from app.models.image_analyzer  import image_analyzer
+    from app.models.voice_processor import voice_processor
 
     text_classifier.load()
     url_classifier.load()
     image_analyzer.load()
+    voice_processor.load()
 
     logger.info("=" * 50)
     logger.info("  All systems ready!")

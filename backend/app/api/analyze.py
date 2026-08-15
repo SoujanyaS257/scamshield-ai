@@ -446,31 +446,29 @@ async def analyze_voice(
     elif audio_file:
         logger.info(f"Voice analysis (audio file): {audio_file.filename}")
         try:
-            import whisper
-            contents  = await audio_file.read()
-            
-            # Save temporarily for Whisper
-            import tempfile
-            import os
-            with tempfile.NamedTemporaryFile(
-                suffix='.wav', delete=False
-            ) as tmp:
-                tmp.write(contents)
-                tmp_path = tmp.name
+            # Get file extension for temp file
+            ext      = os.path.splitext(audio_file.filename or '.wav')[1]
+            contents = await audio_file.read()
 
-            # Load Whisper model (base = fast, good enough)
-            whisper_model = whisper.load_model("base")
-            result        = whisper_model.transcribe(tmp_path)
-            final_text    = result['text']
-            os.unlink(tmp_path)  # Delete temp file
+            # Use our VoiceProcessor singleton
+            from app.models.voice_processor import voice_processor
+            final_text = voice_processor.transcribe_bytes_direct(contents)
 
-            logger.info(f"Whisper transcribed: '{final_text[:50]}'")
+            if not final_text:
+                raise HTTPException(
+                    status_code=422,
+                    detail="Could not transcribe audio. "
+                           "Try speaking more clearly or use text input."
+                )
+            logger.info(f"Transcribed: '{final_text[:50]}'")
 
+        except HTTPException:
+            raise
         except Exception as e:
-            logger.error(f"Whisper transcription failed: {e}")
+            logger.error(f"Voice processing error: {e}")
             raise HTTPException(
                 status_code=500,
-                detail=f"Audio transcription failed: {str(e)}"
+                detail=f"Audio processing failed: {str(e)}"
             )
     else:
         raise HTTPException(
