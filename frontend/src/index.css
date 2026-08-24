@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 transition-colors duration-200;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  html.dark body {
+    @apply bg-gray-950 text-gray-100;
+  }
+
+  ::-webkit-scrollbar       { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-gray-800; }
+  ::-webkit-scrollbar-thumb { @apply bg-gray-400 dark:bg-gray-600 rounded-full; }
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-sm
+           border border-gray-200 dark:border-gray-700
+           transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-indigo-600 hover:bg-indigo-700 text-white
+           font-semibold px-6 py-3 rounded-xl
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-indigo-500
+           active:scale-95;
+  }
+
+  .input-field {
+    @apply w-full bg-gray-50 dark:bg-gray-900
+           border border-gray-300 dark:border-gray-600
+           rounded-xl px-4 py-3 text-sm
+           focus:outline-none focus:ring-2 focus:ring-indigo-500
+           transition-colors duration-200
+           placeholder-gray-400 dark:placeholder-gray-500;
+  }
+
+  .risk-badge {
+    @apply inline-flex items-center gap-1.5
+           px-3 py-1 rounded-full text-sm font-bold
+           uppercase tracking-wide;
+  }
+}
